@@ -16,11 +16,14 @@ type Message = {
   }
 }
 
-const messageListener = (message: Message) => {
+const messageListener = (
+  message: Message,
+  sender: chrome.runtime.MessageSender
+) => {
+  const senderTabId = sender?.tab?.id ?? 0
+
   const { type, payload } = message
   if (type === 'declarations') {
-    console.log(payload.declarations)
-
     const alreadySeenProperties: string[] = []
     const browserSupports: BrowserSupport[] = []
     const unknownDeclarations: Declaration[] = []
@@ -48,15 +51,15 @@ const messageListener = (message: Message) => {
     const groupedBrowserSupports =
       groupBrowserSupportsByBrowser(browserSupports)
 
+    console.log(groupedBrowserSupports, unknownDeclarations)
+
     /**
      * Chrome Locale Storage is used to shared the global state with the popup.
      */
     chrome.storage.local.set({
-      browserSupports: groupedBrowserSupports,
-      unknownDeclarations,
+      [`browserSupports-${senderTabId}`]: groupedBrowserSupports,
+      [`unknownDeclarations-${senderTabId}`]: unknownDeclarations,
     })
-
-    console.log(groupedBrowserSupports)
   }
 }
 

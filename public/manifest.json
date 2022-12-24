@@ -7,7 +7,7 @@
     "default_popup": "index.html",
     "default_title": "Click here to CSS Browser Support"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "tabs"],
   "background": {
     "service_worker": "./static/js/background.js"
   },
