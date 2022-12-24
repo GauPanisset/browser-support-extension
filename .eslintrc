@@ -8,7 +8,8 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:import/warnings",
+    "plugin:tailwindcss/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -21,7 +22,8 @@
   "plugins": [
       "prettier",
       "react",
-      "@typescript-eslint"
+      "@typescript-eslint",
+      "tailwindcss"
   ],
   "rules": {
     "import/order": [
