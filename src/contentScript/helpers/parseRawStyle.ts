@@ -12,15 +12,20 @@ import parse from 'css/lib/parse'
  * }
  * ```
  * @param rawStyle a chunk of css
- * @returns a list of css Rules.
+ * @returns a list of css Rules. May be empty if an error occurred during css parsing.
  */
 const parseRawStyle = (rawStyle: string): Rule[] => {
-  const parsedStyle = parse(rawStyle) as Stylesheet
+  try {
+    const parsedStyle = parse(rawStyle) as Stylesheet
+    const maybeRules = parsedStyle.stylesheet?.rules
 
-  const maybeRules = parsedStyle.stylesheet?.rules
+    if (!maybeRules) return []
+    return maybeRules.filter((rule) => rule.type === 'rule')
+  } catch (error) {
+    console.warn(`Error from 'browser-support-extension:`, error)
 
-  if (!maybeRules) return []
-  return maybeRules.filter((rule) => rule.type === 'rule')
+    return []
+  }
 }
 
 export { parseRawStyle }
