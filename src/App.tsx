@@ -1,5 +1,13 @@
+import Body from 'components/Body'
+import Layout from 'components/Layout'
+import './index.css'
+
 const App = () => {
-  return <div>Hello World</div>
+  return (
+    <Layout>
+      <Body />
+    </Layout>
+  )
 }
 
 export default App
